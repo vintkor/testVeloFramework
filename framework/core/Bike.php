@@ -4,10 +4,10 @@
  * Created by PhpStorm.
  * User: vintkor
  * Date: 24.03.17
- * Time: 12:53
+ * Time: 12:52
  */
 
 /**
- * Class Controller
+ * Class Base
  */
-abstract class Controller extends Base {}
+class Bike {}

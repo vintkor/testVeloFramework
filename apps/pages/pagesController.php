@@ -1,6 +1,6 @@
 <?php
 
-class pagesController extends Controller
+class pagesController extends Bike
 {
     public function index()
     {
