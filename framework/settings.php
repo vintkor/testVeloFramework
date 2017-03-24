@@ -1,14 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: vintkor
- * Date: 24.03.17
- * Time: 12:26
- */
 
-return array(
+$settings =  array(
     'site_name' => 'Test framework',
-    'debug' => true,
+    'debug' => TRUE,
     'apps' => array(
         'pages',
         'blog',

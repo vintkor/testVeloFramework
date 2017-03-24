@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: vintkor
- * Date: 24.03.17
- * Time: 12:23
- */
 
 /**
  * @param $print
