@@ -2,8 +2,13 @@
 
 class pagesController extends Bike
 {
-    public function index()
+    public function test_home()
     {
-        echo 'pagesController@index';
+        echo 'Главная страница';
+    }
+    
+    public function test_contact()
+    {
+        echo 'Страница контакты';
     }
 }
