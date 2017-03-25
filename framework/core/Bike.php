@@ -1,52 +1,45 @@
 <?php
 
-/**
- * Class Base
- */
 class Bike
 {
     
-    private $settings;
-    
-    /**
-     * 
-     * @param array $settings
-     */
+    protected 
+        $settings,
+        $app = false,
+        $controller,
+        $route,
+        $url;
+
     public function __construct(array $settings = [])
     {
-        $this->set($settings);
-        
+        $this->settings = $settings;
+        $this->url = $_SERVER['REQUEST_URI'];
+        $this->initApps();        
+    }
+    
+    private function initApps()
+    {
         foreach ($this->settings as $app) {
-            $controller = $app . 'Controller';
-            if (file_exists( PATH_TO_APPS . $app ) and
-                file_exists( PATH_TO_APPS . $app . '/' . $controller . '.php')
-                ) {
-                require_once PATH_TO_APPS . $app . '/' . $controller . '.php';
-                $this->initialApps($controller, $app);
-                echo 'Application <strong>' . $app . '</strong> is work!</br>';
+            if( file_exists( PATH_TO_APPS . $app ) and
+                file_exists( PATH_TO_APPS . $app . '/' . $app . 'Controller.php' ) and
+                file_exists( PATH_TO_APPS . $app . '/route.php' ) ) {
+                $this->controller = $app . 'Controller';
+                $routes = PATH_TO_APPS . $app . '/route.php';
+                
+                $this->route = require_once $routes;
+                foreach ($this->route as $pattern) {
+                    if ($pattern['pattern'] == $this->url) {
+                        require_once PATH_TO_APPS . $app . '/' . $this->controller . '.php';
+                        $this->app = new $this->controller();
+                        $this->app->{$pattern['method']}();
+                        break(2);
+                    }
+                } 
             } else {
-                echo 'Application <strong>' . $app . '</strong> do not exist!</br>';
-                continue;
+                header("HTTP/1.1 404 Not Found");
+                echo 'Error 404.</br>Страница <strong>' . $_SERVER['HTTP_HOST'] . $this->url . '</strong> не найдена!<br>';
             }
         }
     }
 
-    private function set($settings)
-    {
-        $this->settings = (array) $settings;
-    }
-   
-    /**
-     * 
-     * @param type $controller
-     * @param type $app
-     */
-    private function initialApps($controller, $app)
-    {
-        try {
-            eval( '$' . $app . ' = new ' . $controller . '();' );
-        } catch (Exception $e) {
-            echo $e;
-        }
-    }
 }
