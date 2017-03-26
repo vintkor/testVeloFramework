@@ -24,9 +24,8 @@ class Bike
                 file_exists( PATH_TO_APPS . $app . '/' . $app . 'Controller.php' ) and
                 file_exists( PATH_TO_APPS . $app . '/route.php' ) ) {
                 $this->controller = $app . 'Controller';
-                $routes = PATH_TO_APPS . $app . '/route.php';
-                
-                $this->route = require_once $routes;
+                $this->route = require_once PATH_TO_APPS . $app . '/route.php';
+
                 foreach ($this->route as $pattern) {
                     if ($pattern['pattern'] == $this->url) {
                         require_once PATH_TO_APPS . $app . '/' . $this->controller . '.php';
@@ -34,12 +33,18 @@ class Bike
                         $this->app->{$pattern['method']}();
                         break(2);
                     }
-                } 
+                }
+
             } else {
-                header("HTTP/1.1 404 Not Found");
+                $this->error404();
                 echo 'Error 404.</br>Страница <strong>' . $_SERVER['HTTP_HOST'] . $this->url . '</strong> не найдена!<br>';
             }
         }
+    }
+    
+    public function error404()
+    {
+        header("HTTP/1.1 404 Not Found");
     }
 
 }
