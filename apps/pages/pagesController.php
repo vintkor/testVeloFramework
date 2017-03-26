@@ -6,9 +6,10 @@ class pagesController extends Bike
     {
         echo 'Главная страница';
     }
-    
+
     public function test_contact()
     {
         echo 'Страница контакты';
+        routeList();
     }
 }

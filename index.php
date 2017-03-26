@@ -1,6 +1,7 @@
 <?php
 
 define('PATH_TO_APPS', __DIR__ . '/apps/');
+define('PATH_TO_FRAMEWORK', __DIR__ . '/framework/');
 
 require_once 'framework/core/helpers.php';
 require_once 'framework/settings.php';
